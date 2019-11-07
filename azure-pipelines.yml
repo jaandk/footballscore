@@ -20,12 +20,15 @@ stages:
       vmImage: 'ubuntu-latest'
     steps:
         - task: Docker@2
-          displayName: Build an image
+          displayName: Build and push image to regestery
           inputs: 
-           command: build
+           command: buildAndPush
+           repository: FootBallScore/FootBallScore
+           containerRegistry: FootballscoreRepo
            Dockerfile: '**/Dockerfile'
            tags: |
              $(tag)
+             latest
 
 
 
