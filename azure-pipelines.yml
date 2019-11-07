@@ -1,4 +1,7 @@
-- trigger:
+# Docker
+# Build a Docker image
+
+trigger:
 - master
 
 resources:
@@ -8,7 +11,21 @@ variables:
  tag: '$(Build.BuildId)'
 
 stages:
-- task: Docker@2
-  inputs:
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
+- stage: Build
+  displayName: Build image
+  jobs:
+  - job: Build
+    displayname: Build
+    pool: 
+      vmImage: 'ubuntu-latest'
+    steps:
+        - task: Docker@2
+          displayName: Build an image
+          inputs: 
+           command: build
+           Dockerfile: '**/Dockerfile'
+           tags: |
+             $(tag)
+
+
+
